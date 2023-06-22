@@ -169,7 +169,7 @@ namespace ModSettings {
 
 		[HideFromIl2Cpp]
 		private void EnsureSelectedSettingVisible() {
-			if (Utils.GetMenuMovementVertical(InterfaceManager.GetPanel<Panel_OptionsMenu>(), true, false) == 0f)
+			if (Il2Cpp.Utils.GetMenuMovementVertical(InterfaceManager.GetPanel<Panel_OptionsMenu>(), true, false) == 0f)
 				return;
 
 			if (selectedIndex == 0) {
@@ -287,9 +287,10 @@ namespace ModSettings {
 
 		[HideFromIl2Cpp]
 		private void ResizeScrollBar(ModTab modTab) {
-			int childCount = modTab.uiGrid.GetChildList().Count;
+			//int childCount = modTab.uiGrid.GetChildList().Count;
+			int childCount = modTab.uiGrid.transform.childCount;
 
-			if (modTab == currentTab) {
+            if (modTab == currentTab) {
 				float absoluteVal = scrollBarSlider.value * modTab.scrollBarHeight;
 
 				float height = childCount * GUIBuilder.gridCellHeight;

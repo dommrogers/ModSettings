@@ -10,7 +10,7 @@ namespace ModSettings {
 		private readonly Queue<Transform> sections = new Queue<Transform>();
 
 		private bool afterLast;
-
+		
 		internal CustomModeGUIBuilder(Panel_CustomXPSetup panel) : base(CreateUIGrid(panel), panel.m_CustomXPMenuItemOrder) {
 			// Remove all but the first element, which is the experience mode preset selector
 			panel.m_CustomXPMenuItemOrder.RemoveRange(1, panel.m_CustomXPMenuItemOrder.Count - 1);
@@ -31,16 +31,18 @@ namespace ModSettings {
 			uiGrid.cellHeight = gridCellHeight;
 			uiGrid.hideInactive = true;
 			uiGrid.onReposition = new System.Action(() => ResizeScrollBar(panel, uiGrid));
-			return uiGrid;
+
+            return uiGrid;
 		}
 
 		private static void ResizeScrollBar(Panel_CustomXPSetup panel, UIGrid uiGrid) {
 			UISlider slider = panel.m_Scrollbar.GetComponentInChildren<UISlider>(true);
 			float viewHeight = panel.m_ScrollPanel.height;
 			float absoluteVal = slider.value * (panel.m_ScrollPanelHeight - viewHeight);
-			int childCount = uiGrid.GetChildList().Count;
+			//int childCount = uiGrid.GetChildList().Count;
+			int childCount = uiGrid.transform.childCount;
 
-			float height = childCount * gridCellHeight;
+            float height = childCount * gridCellHeight;
 			panel.m_ScrollPanelHeight = height;
 
 			ScrollbarThumbResizer thumbResizer = slider.GetComponent<ScrollbarThumbResizer>();
@@ -61,7 +63,7 @@ namespace ModSettings {
 
 			// Re-parent GUI elements to table and update menuItemOrder
 			Transform section = sections.Dequeue();
-			int elements = section.childCount;
+			int elements = section.childCount;			
 
 			for (int i = 0; i < elements; ++i) {
 				Transform element = section.GetChild(0);
